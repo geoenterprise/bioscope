@@ -1,0 +1,2 @@
+### Weather (template endpoint)
+GET https://localhost:7110/weatherforecast
