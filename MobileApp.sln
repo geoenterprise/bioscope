@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileApp", "MobileApp\MobileApp.csproj", "{8C705839-D93C-4185-B650-A7F9A8475562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{3E9FDA0A-BEB2-45E2-845E-44372D812ACB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C705839-D93C-4185-B650-A7F9A8475562}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3E9FDA0A-BEB2-45E2-845E-44372D812ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9FDA0A-BEB2-45E2-845E-44372D812ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9FDA0A-BEB2-45E2-845E-44372D812ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9FDA0A-BEB2-45E2-845E-44372D812ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {361E5555-5A36-41BB-B00D-5DD074DB95A0}
+	EndGlobalSection
+EndGlobal
