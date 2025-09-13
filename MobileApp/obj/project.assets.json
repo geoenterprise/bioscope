@@ -33167,11 +33167,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Documents\\BYU\\Senior_Project\\MobileApp\\MobileApp\\MobileApp.csproj",
+      "projectUniqueName": "D:\\Documents\\BYU\\Senior_Project\\bioscope_vs\\MobileApp\\MobileApp.csproj",
       "projectName": "MobileApp",
-      "projectPath": "D:\\Documents\\BYU\\Senior_Project\\MobileApp\\MobileApp\\MobileApp.csproj",
+      "projectPath": "D:\\Documents\\BYU\\Senior_Project\\bioscope_vs\\MobileApp\\MobileApp.csproj",
       "packagesPath": "C:\\Users\\jovan\\.nuget\\packages\\",
-      "outputPath": "D:\\Documents\\BYU\\Senior_Project\\MobileApp\\MobileApp\\obj\\",
+      "outputPath": "D:\\Documents\\BYU\\Senior_Project\\bioscope_vs\\MobileApp\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [

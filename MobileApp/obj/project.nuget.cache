@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HGMigapFMfU=",
+  "dgSpecHash": "g9yFg1Qj4ig=",
   "success": true,
-  "projectFilePath": "D:\\Documents\\BYU\\Senior_Project\\MobileApp\\MobileApp\\MobileApp.csproj",
+  "projectFilePath": "D:\\Documents\\BYU\\Senior_Project\\bioscope_vs\\MobileApp\\MobileApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jovan\\.nuget\\packages\\googlegson\\2.10.1.4\\googlegson.2.10.1.4.nupkg.sha512",
     "C:\\Users\\jovan\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
