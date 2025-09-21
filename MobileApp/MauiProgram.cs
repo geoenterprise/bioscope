@@ -11,6 +11,11 @@ public static class MauiProgram
     }
 }
 
+// Platforms/Android/MainActivity.cs
+
+
+
+
 
 //using Microsoft.Extensions.Logging;
 
