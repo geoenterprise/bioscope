@@ -1,4 +1,6 @@
-﻿namespace MobileApp;
+﻿using MobileApp.Services;
+
+namespace MobileApp;
 
 public static class MauiProgram
 {
@@ -8,9 +10,22 @@ public static class MauiProgram
             .UseMauiApp<App>();
 
         return builder.Build();
+
+
+#if ANDROID
+        var baseUri = new Uri("https://10.0.2.2:7071/");
+#else
+        var baseUri = new Uri("https://localhost:7071/");
+#endif
+
+        builder.Services.AddHttpClient<OrganismApiService>(c =>
+        {
+            c.BaseAddress = baseUri;
+        });
+
+        return builder.Build();
     }
 }
-
 
 //using Microsoft.Extensions.Logging;
 
