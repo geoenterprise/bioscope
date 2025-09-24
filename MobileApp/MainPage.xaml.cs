@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Linq;
+using Microsoft.Maui.Media;
 
 namespace MobileApp;
 
@@ -11,11 +12,37 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
     private int _count;
-    private void OnCounterClicked(object sender, EventArgs e)
+
+    //The method to take a photo
+    private async void TakePhoto(object sender, EventArgs e)
     {
-        _count++;
-        CounterBtn.Text = $"Clicked {_count}";
+        var status = await Permissions.RequestAsync<Permissions.Camera>();
+        if (status != PermissionStatus.Granted)
+        {
+            await DisplayAlert("Permission Denied", "Camera permission is required", "OK");
+            return;
+        }
+
+        try
+        {
+            var photo = await MediaPicker.Default.CapturePhotoAsync();
+            if (photo != null)
+            {
+                await Navigation.PushAsync(new PreviewPage(photo));
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error in take the photo: {ex.Message}", "OK");
+        }
+        
+
     }
+    // private void OnCounterClicked(object sender, EventArgs e)
+    // {
+    //     _count++;
+    //     CounterBtn.Text = $"Clicked {_count}";
+    // }
 
     private async void OnGetWeatherClicked(object sender, EventArgs e)
     {

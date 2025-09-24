@@ -25,10 +25,10 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
-                x:Name="CounterBtn"
+                x:Name="PhotoBtn"
                 Text="Take a photo" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                SemanticProperties.Hint="Take a photo of a plant"
+                Clicked="TakePhoto"
                 HorizontalOptions="Fill" />
         
   
