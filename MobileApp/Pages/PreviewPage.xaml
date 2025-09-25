@@ -16,7 +16,7 @@
             <Button
                 Text="Confirm" 
                 SemanticProperties.Hint="Confirm to send the image to the AI"
-               
+                Clicked="IdentifyClicked"
                 HorizontalOptions="Fill" />
             
             <Button
