@@ -6,8 +6,10 @@
     <ScrollView>
         <VerticalStackLayout
             Padding="30,70"
+            Padding="30,70"
             Spacing="25">
             <Image
+                Source="my_cactus_alpha.png"
                 Source="my_cactus_alpha.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
@@ -15,25 +17,29 @@
 
             <Label
                 Text="Discover your plant"
+                Text="Discover your plant"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
             <Label
+                Text="by simply taking a photo"
                 Text="by simply taking a photo"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
-                x:Name="CounterBtn"
+                x:Name="PhotoBtn"
                 Text="Take a photo" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                SemanticProperties.Hint="Take a photo of a plant"
+                Clicked="TakePhoto"
                 HorizontalOptions="Fill" />
         
   
             <!-- <Button 
+            <!-- <Button 
                 Text="Get Weather" 
+                Clicked="OnGetWeatherClicked"/> -->
                 Clicked="OnGetWeatherClicked"/> -->
             
             <Label 
