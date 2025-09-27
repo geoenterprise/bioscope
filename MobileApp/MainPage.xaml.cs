@@ -14,7 +14,7 @@ public partial class MainPage : ContentPage
     private void OnCounterClicked(object sender, EventArgs e)
     {
         _count++;
-        CounterBtn.Text = $"Clicked {_count} times";
+        CounterBtn.Text = $"Clicked {_count}";
     }
 
     private async void OnGetWeatherClicked(object sender, EventArgs e)
