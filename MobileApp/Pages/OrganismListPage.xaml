@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             x:Class="MobileApp.Pages.OrganismListPage"
-             Title="Organisms">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="MobileApp.Pages.OrganismListPage"
+            Title="Organisms">
     <CollectionView ItemsSource="{Binding Organisms}">
         <CollectionView.ItemTemplate>
             <DataTemplate>

@@ -2,7 +2,8 @@
 using System.Net.Http.Json;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text.Json; 
+using System.Text.Json;
+
 
 
 namespace MobileApp;
@@ -25,6 +26,7 @@ public partial class PreviewPage : ContentPage
             PreviewImage.Source = ImageSource.FromStream(() => stream);
         }
     }
+    
 
     private async void IdentifyClicked(object sender, EventArgs e)
     {
@@ -32,43 +34,44 @@ public partial class PreviewPage : ContentPage
 
         try
         {
-            string apiKey = "2dYRCiCaBfbLN6xm0I6drq23cZwVEkI88B1UhqmH6L6Idqvq5q";
-            using var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Api-Key", apiKey);
+            using var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
 
+
+            #if DEBUG
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
+                client = new HttpClient(handler);
+            #else
+                client = new HttpClient();
+            #endif
+    
+            
             using var form = new MultipartFormDataContent();
             using var stream = await _photo.OpenReadAsync();
             var imageContent = new StreamContent(stream);
             imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-            form.Add(imageContent, "images[]", _photo.FileName);
 
-            var response = await client.PostAsync("https://api.plant.id/v2/identify", form);
+            form.Add(imageContent, "photo", _photo.FileName);
+
+
+
+            var response = await client.PostAsync("https://localhost:7022/api/organisms/upload", form);
             var json = await response.Content.ReadAsStringAsync();
 
             await Navigation.PushAsync(new SuggestionsPage(json));
-
-
-            // var doc = JsonDocument.Parse(json);
-            // var suggestions = doc.RootElement.GetProperty("suggestions");
-
-
-            // if (suggestions.GetArrayLength() > 0)
-            // {
-            //     var suggestionList = new List<string>();
-            //     foreach (var suggestion in suggestions.EnumerateArray())
-            //     {
-            //         var plantName = suggestion.GetProperty("plant_name").GetString();
-            //         var probability = suggestion.GetProperty("probability").GetDouble();
-            //         Console.WriteLine($"- {plantName} (confidence: {probability:P0})");
-            //     }
-
-            // }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"Errorrrrrr: {ex.Message}");
+            await DisplayAlert("Errorrrrrrr", ex.Message, "OK");
         }
     }
+
 
 }
 

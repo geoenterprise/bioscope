@@ -5,24 +5,24 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,70"
+            
             Padding="30,70"
             Spacing="25">
             <Image
-                Source="my_cactus_alpha.png"
+                
                 Source="my_cactus_alpha.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
 
             <Label
-                Text="Discover your plant"
+                
                 Text="Discover your plant"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
             <Label
-                Text="by simply taking a photo"
+                
                 Text="by simply taking a photo"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
@@ -36,11 +36,11 @@
                 HorizontalOptions="Fill" />
         
   
-            <!-- <Button 
+        
             <!-- <Button 
                 Text="Get Weather" 
                 Clicked="OnGetWeatherClicked"/> -->
-                Clicked="OnGetWeatherClicked"/> -->
+             
             
             <Label 
                 x:Name="ResultLabel" 
