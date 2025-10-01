@@ -13,7 +13,7 @@ public partial class SuggestionsPage : ContentPage
     {
         InitializeComponent();
 
-        // Mostrar el JSON crudo en el Label
+        // Show raw JSON in the label
         JsonLabel.Text = json;
     }
 
