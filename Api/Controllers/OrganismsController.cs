@@ -46,13 +46,17 @@ namespace PlantAnimalApi.Controllers
 
             
             var imageUrl = await PhotoHelper.SavePhotoAsync(photo);
+            
+            var pathPhoto = Path.Combine(Directory.GetCurrentDirectory(), savedFile.TrimStart('/'));
+
+            var aiResult = await IdentifyPhotoAsync(fullPath);
 
             return Ok(new
             {
                 message = "The photo was received",
                 fileName = photo.FileName,
                 size = photo.Length,
-                url = imageUrl 
+                url = imageUrl
             });
         }
 
