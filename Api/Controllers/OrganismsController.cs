@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using PlantAnimalApi.Services;
 using PlantAnimalApi.Models;
-using MobileApp.Helpers; 
+using MobileApp.Helpers;
+using System.Text.Json; 
 
 namespace PlantAnimalApi.Controllers
 {
@@ -47,16 +48,22 @@ namespace PlantAnimalApi.Controllers
             
             var imageUrl = await PhotoHelper.SavePhotoAsync(photo);
             
-            var pathPhoto = Path.Combine(Directory.GetCurrentDirectory(), savedFile.TrimStart('/'));
+            var pathPhoto = Path.Combine(Directory.GetCurrentDirectory(), imageUrl.TrimStart('/'));
 
-            var aiResult = await IdentifyPhotoAsync(fullPath);
+            Console.WriteLine($"La foto está en: {pathPhoto}");
+
+
+            var aiResult = await PhotoHelper.IdentifyPhotoAsync(pathPhoto);
+
+            Console.WriteLine(JsonSerializer.Serialize(aiResult, new JsonSerializerOptions { WriteIndented = true }));
 
             return Ok(new
             {
                 message = "The photo was received",
                 fileName = photo.FileName,
                 size = photo.Length,
-                url = imageUrl
+                url = imageUrl,
+                Result = aiResult
             });
         }
 

@@ -2,6 +2,12 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using PlantAnimalApi.Models;
+using System.Text.Json;
+
+
+
 
 namespace MobileApp.Helpers
 {
@@ -22,6 +28,34 @@ namespace MobileApp.Helpers
             }
 
             return $"/uploads/{fileName}";
+        }
+
+        public static async Task<PlantIdResult> IdentifyPhotoAsync(string filePath)
+        {
+            try
+            {
+                string apiKey = "2dYRCiCaBfbLN6xm0I6drq23cZwVEkI88B1UhqmH6L6Idqvq5q";
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Api-Key", apiKey);
+
+                using var form = new MultipartFormDataContent();
+                var ImageReaded = await File.ReadAllBytesAsync(filePath);
+                var imageContent = new ByteArrayContent(ImageReaded);
+                imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                form.Add(imageContent, "images[]", Path.GetFileName(filePath));
+
+                var response = await client.PostAsync("https://api.plant.id/v2/identify", form);
+                var json = await response.Content.ReadAsStringAsync();
+
+                PlantIdResult aiResult = JsonSerializer.Deserialize<PlantIdResult>(json);
+
+                return aiResult;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
         }
     }
 }
