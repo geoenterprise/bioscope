@@ -1,4 +1,6 @@
 ﻿using MobileApp.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace MobileApp;
 
@@ -22,6 +24,8 @@ public static class MauiProgram
         {
             c.BaseAddress = baseUri;
         });
+
+        builder.Services.AddHttpClient();
 
         return builder.Build();
     }

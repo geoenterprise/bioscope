@@ -36,5 +36,22 @@ namespace PlantAnimalApi.Controllers
             var created = await _organismService.AddAsync(org);
             return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadPhoto([FromForm] IFormFile photo)
+        {
+            if (photo == null || photo.Length == 0)
+                return BadRequest("No photo was sent.");
+
+            
+            Console.WriteLine($"The photo was received: {photo.FileName}, weight: {photo.Length} bytes, type: {photo.ContentType}");
+
+            return Ok(new { 
+                message = "The photo was received", 
+                fileName = photo.FileName, 
+                size = photo.Length 
+            });
+        }
+
     }
 }
