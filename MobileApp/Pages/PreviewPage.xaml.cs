@@ -34,11 +34,7 @@ public partial class PreviewPage : ContentPage
 
         try
         {
-            using var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-
+            HttpClient client;
 
             #if DEBUG
                 var handler = new HttpClientHandler
@@ -60,7 +56,7 @@ public partial class PreviewPage : ContentPage
 
 
 
-            var response = await client.PostAsync("https://localhost:7022/api/organisms/upload", form);
+            var response = await client.PostAsync("https://10.189.154.250:7022/api/organisms/upload", form);
             var json = await response.Content.ReadAsStringAsync();
 
             await Navigation.PushAsync(new SuggestionsPage(json));
