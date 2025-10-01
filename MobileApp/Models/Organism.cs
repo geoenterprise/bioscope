@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace MobileApp.Models
 {
     public class Organism
@@ -9,4 +11,7 @@ namespace MobileApp.Models
         public string ImageUrl { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
     }
+
+
+
 }
