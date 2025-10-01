@@ -30,7 +30,7 @@ namespace MobileApp.Helpers
             return $"/uploads/{fileName}";
         }
 
-        public static async Task<PlantIdResult> IdentifyPhotoAsync(string filePath)
+        public static async Task<string> IdentifyPhotoAsync(string filePath)
         {
             try
             {
@@ -45,11 +45,12 @@ namespace MobileApp.Helpers
                 form.Add(imageContent, "images[]", Path.GetFileName(filePath));
 
                 var response = await client.PostAsync("https://api.plant.id/v2/identify", form);
+                response.EnsureSuccessStatusCode();
+
                 var json = await response.Content.ReadAsStringAsync();
+                return json;
 
-                PlantIdResult aiResult = JsonSerializer.Deserialize<PlantIdResult>(json);
-
-                return aiResult;
+               
             }
             catch (Exception ex)
             {

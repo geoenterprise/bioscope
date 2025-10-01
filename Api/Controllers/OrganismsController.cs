@@ -50,12 +50,14 @@ namespace PlantAnimalApi.Controllers
             
             var pathPhoto = Path.Combine(Directory.GetCurrentDirectory(), imageUrl.TrimStart('/'));
 
-            Console.WriteLine($"La foto está en: {pathPhoto}");
+        
 
 
             var aiResult = await PhotoHelper.IdentifyPhotoAsync(pathPhoto);
 
-            Console.WriteLine(JsonSerializer.Serialize(aiResult, new JsonSerializerOptions { WriteIndented = true }));
+            Console.WriteLine();
+            Console.WriteLine(aiResult);
+            Console.WriteLine();
 
             return Ok(new
             {
