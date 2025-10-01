@@ -34,11 +34,7 @@ public partial class PreviewPage : ContentPage
 
         try
         {
-            using var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-
+            HttpClient client;
 
             #if DEBUG
                 var handler = new HttpClientHandler

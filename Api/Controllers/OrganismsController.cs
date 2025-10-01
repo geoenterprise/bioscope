@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlantAnimalApi.Services;
 using PlantAnimalApi.Models;
+using MobileApp.Helpers; 
 
 namespace PlantAnimalApi.Controllers
 {
@@ -44,12 +45,14 @@ namespace PlantAnimalApi.Controllers
                 return BadRequest("No photo was sent.");
 
             
-            Console.WriteLine($"The photo was received: {photo.FileName}, weight: {photo.Length} bytes, type: {photo.ContentType}");
+            var imageUrl = await PhotoHelper.SavePhotoAsync(photo);
 
-            return Ok(new { 
-                message = "The photo was received", 
-                fileName = photo.FileName, 
-                size = photo.Length 
+            return Ok(new
+            {
+                message = "The photo was received",
+                fileName = photo.FileName,
+                size = photo.Length,
+                url = imageUrl 
             });
         }
 
