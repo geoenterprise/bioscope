@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using PlantAnimalApi.Models;
 using System.Text.Json;
+using DotNetEnv;
 
 
 
@@ -34,17 +35,32 @@ namespace MobileApp.Helpers
         {
             try
             {
-                string apiKey = "2dYRCiCaBfbLN6xm0I6drq23cZwVEkI88B1UhqmH6L6Idqvq5q";
+                DotNetEnv.Env.Load();
+
+                string apiKey = Environment.GetEnvironmentVariable("PLANT_ID_API_KEY");
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Api-Key", apiKey);
 
-                using var form = new MultipartFormDataContent();
-                var ImageReaded = await File.ReadAllBytesAsync(filePath);
-                var imageContent = new ByteArrayContent(ImageReaded);
-                imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-                form.Add(imageContent, "images[]", Path.GetFileName(filePath));
+                // using var form = new MultipartFormDataContent();
 
-                var response = await client.PostAsync("https://api.plant.id/v2/identify", form);
+                var ImageInBytes = await File.ReadAllBytesAsync(filePath);
+                string base64Image = Convert.ToBase64String(ImageInBytes);
+
+                var requestBody = new
+                {
+                    images = new[] { base64Image },
+                    modifiers = new[] { "crops_fast", "similar_images" },
+                    plant_details = new[] { "common_names", "url", "wiki_description", "taxonomy", "edible_parts" }
+                };
+
+                var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), System.Text.Encoding.UTF8, "application/json");
+
+
+                // var imageContent = new ByteArrayContent(ImageReaded);
+                // imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                // form.Add(imageContent, "images[]", Path.GetFileName(filePath));
+
+                var response = await client.PostAsync("https://api.plant.id/v2/identify", jsonContent);
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
