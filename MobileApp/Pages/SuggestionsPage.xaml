@@ -4,13 +4,55 @@
              x:Class="MobileApp.SuggestionsPage"
              Title="Suggestions">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20">
-            <Label x:Name="JsonLabel"
-                   Text="Waiting JSON..."
-                   FontSize="14"
-                   LineBreakMode="WordWrap" />
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid Padding="20" RowDefinitions="Auto,*">
+       
+            <Label x:Name="WarningLabel"
+                TextColor="Red"
+                FontAttributes="Bold"
+                IsVisible="False"
+                LineBreakMode="WordWrap"
+                Grid.Row="0" />
+
+            <CollectionView x:Name="SuggestionsCollection"
+                            Margin="10"
+                            ItemsLayout="VerticalList"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand"
+                            Grid.Row="1">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10"
+                            Margin="5"
+                            CornerRadius="10"
+                            BorderColor="LightGray"
+                            HasShadow="True"
+                            HorizontalOptions="Fill">
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Image Source="{Binding Similar_Images[0].Url_Small}"
+                                    HeightRequest="100"
+                                    Aspect="AspectFit"/>
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="{Binding Plant_Name}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="Black"
+                                            LineBreakMode="WordWrap"/>
+                                        <Label Text="{Binding Probability, StringFormat='Probabilidad: {0:P2}'}"
+                                            FontSize="14"
+                                            TextColor="Gray"/>
+                                    </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <Grid HeightRequest="30"/>
+                </CollectionView.Footer>
+            </CollectionView>
+     
+    </Grid>
+
 
 </ContentPage>
