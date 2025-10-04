@@ -45,28 +45,41 @@ namespace PlantAnimalApi.Controllers
             if (photo == null || photo.Length == 0)
                 return BadRequest("No photo was sent.");
 
-            
+
             var imageUrl = await PhotoHelper.SavePhotoAsync(photo);
-            
+
             var pathPhoto = Path.Combine(Directory.GetCurrentDirectory(), imageUrl.TrimStart('/'));
 
-        
 
-
-            var aiResult = await PhotoHelper.IdentifyPhotoAsync(pathPhoto);
-
-            Console.WriteLine();
-            Console.WriteLine(aiResult);
-            Console.WriteLine();
-
-            return Ok(new
+            try
             {
-                message = "The photo was received",
-                fileName = photo.FileName,
-                size = photo.Length,
-                url = imageUrl,
-                Result = aiResult
-            });
+
+                var aiResult = await PhotoHelper.IdentifyPhotoAsync(pathPhoto);
+
+
+                var aiObject = JsonSerializer.Deserialize<object>(aiResult);
+
+
+                return Ok(new
+                {
+                    message = "The photo was received",
+                    fileName = photo.FileName,
+                    size = photo.Length,
+                    url = imageUrl,
+                    Result = aiObject
+                });
+
+            }
+            finally
+            {
+                if (System.IO.File.Exists(pathPhoto))
+                {
+                    System.IO.File.Delete(pathPhoto);
+                }
+                
+            }
+
+            
         }
 
     }

@@ -11,7 +11,6 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
     }
-    private int _count;
 
     //The method to take a photo
     private async void TakePhoto(object sender, EventArgs e)
