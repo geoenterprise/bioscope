@@ -28,6 +28,10 @@
                             HasShadow="True"
                             HorizontalOptions="Fill">
 
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSuggestionClick" NumberOfTapsRequired="1"/>
+                            </Frame.GestureRecognizers>
+
                             <HorizontalStackLayout Spacing="5">
                                 <Image Source="{Binding Similar_Images[0].Url_Small}"
                                     HeightRequest="100"

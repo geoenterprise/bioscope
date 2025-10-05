@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.SuggestionDetailsPage"
+             Title="Suggestion Details">
+
+    <ScrollView >
+        <VerticalStackLayout Padding="20" Spacing="10">        
+            <Frame Padding="10"
+                Margin="5"
+                CornerRadius="10"
+                BorderColor="LightGray"
+                HasShadow="True"
+                HorizontalOptions="Fill">
+                
+                <HorizontalStackLayout Spacing="5">
+                    <Image Source="{Binding Similar_Images[0].Url_Small}"
+                        HeightRequest="100"
+                        Aspect="AspectFit"/>
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding Plant_Name}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="Black"
+                                LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Probability, StringFormat='Probabilidad: {0:P2}'}"
+                                FontSize="14"
+                                TextColor="Gray"/>
+                        </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView> 
+</ContentPage>
