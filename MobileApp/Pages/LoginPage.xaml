@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.LoginPage"
+             Title="Login">
+
+    <VerticalStackLayout Padding="30" Spacing="20">
+        <Label Text="Welcome Back" FontSize="28" HorizontalOptions="Center" />
+        <Entry x:Name="EmailEntry"
+               Placeholder="Email"
+               Keyboard="Email"
+               ClearButtonVisibility="WhileEditing" />
+        <Entry x:Name="PasswordEntry"
+               Placeholder="Password"
+               IsPassword="True"
+               ClearButtonVisibility="WhileEditing" />
+        <Button Text="Login"
+                Clicked="OnLoginClicked"
+                BackgroundColor="#007aff"
+                TextColor="White"
+                CornerRadius="10" />
+        <Label Text="Don't have an account?" HorizontalOptions="Center" />
+        <Button Text="Sign Up"
+                Clicked="OnSignupClicked"
+                BackgroundColor="Transparent"
+                TextColor="#007aff" />
+    </VerticalStackLayout>
+</ContentPage>
