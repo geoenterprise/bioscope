@@ -15,14 +15,14 @@ namespace PlantAnimalApi.Models
 
     public class PlantIdResult
     {
-        public string Id { get; set; }
-        public List<Suggestion> Suggestions { get; set; }  // lista de sugerencias
+        public string? Id { get; set; }
+        public List<Suggestion>? Suggestions { get; set; }
     }
 
     public class Suggestion
     {
         [JsonPropertyName("plant_name")]
-        public string PlantName { get; set; }
+        public string? PlantName { get; set; }
 
         [JsonPropertyName("probability")]
         public double Probability { get; set; }

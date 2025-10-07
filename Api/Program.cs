@@ -32,19 +32,6 @@ var raw = Environment.GetEnvironmentVariable("DATABASE_URL")
           ?? builder.Configuration.GetConnectionString("BioscopeDb")
           ?? throw new InvalidOperationException("Missing DB connection string.");
 
-string ToNpgsql(string url)
-{
-    if (!url.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase)) return url;
-    var uri = new Uri(url);
-    var parts = uri.UserInfo.Split(':');
-    var user = Uri.UnescapeDataString(parts[0]);
-    var pass = Uri.UnescapeDataString(parts[1]);
-    var host = uri.Host;
-    var port = uri.Port;
-    var db   = uri.AbsolutePath.Trim('/');
-    return $"Host={host};Port={port};Database={db};Username={user};Password={pass};Ssl Mode=Require;Trust Server Certificate=true;Pooling=true;";
-}
-
 builder.Services.AddDbContext<BioscopeDbContext>(opt =>
     opt.UseNpgsql(ToNpgsql(raw)).UseSnakeCaseNamingConvention());
 

@@ -20,7 +20,8 @@ public class Discovery
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
 
-    public ICollection<MediaAsset> MediaAssets { get; set; } = new();
-    public ICollection<Comment> Comments { get; set; } = new();
-    public ICollection<Reaction> Reactions { get; set; } = new();
+    
+    public ICollection<MediaAsset> MediaAssets { get; set; } = new List<MediaAsset>();
+    public ICollection<Comment>    Comments    { get; set; } = new List<Comment>();
+    public ICollection<Reaction>   Reactions   { get; set; } = new List<Reaction>();
 }
