@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MobileApp.Models
+namespace PlantAnimalApi.Models
 {
-    public class SuggestionImages
+    public class SimilarImages
     {
         [JsonPropertyName("id")]
         public string Id { get; set; } = string.Empty;
@@ -13,7 +13,7 @@ namespace MobileApp.Models
         [JsonPropertyName("url_small")]
         public string Url_Small { get; set; } = string.Empty;
 
-      
+        // puedes agregar más campos si quieres
     }
 
 }

@@ -10,11 +10,16 @@ namespace MobileApp.Models
         [JsonPropertyName("plant_name")]
         public string Plant_Name { get; set; } = string.Empty;
 
+       
+        [JsonPropertyName("plant_details")]
+        public PlantDetails PlantDetails { get; set; } = new();
+
         [JsonPropertyName("probability")]
         public double Probability { get; set; }
 
         [JsonPropertyName("similar_images")]
         public List<SuggestionImages> Similar_Images { get; set; } = new();
+
     }
 
 }

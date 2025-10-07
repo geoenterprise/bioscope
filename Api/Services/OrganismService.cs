@@ -9,8 +9,8 @@ namespace PlantAnimalApi.Services
     {
         private readonly List<Organism> _items = new()
         {
-            new Organism { Id = 1, CommonName = "Rose", ScientificName = "Rosa", Category = "Plant", ImageUrl = "", Description = "A common flowering plant." },
-            new Organism { Id = 2, CommonName = "Blue Jay", ScientificName = "Cyanocitta cristata", Category = "Animal", ImageUrl = "", Description = "A bright blue songbird." }
+            new Organism { Id = 1, Common_Name = "Rose", ScientificName = "Rosa", Category = "Plant", ImageUrl = [], Description = "A common flowering plant." },
+            new Organism { Id = 2, Common_Name = "Blue Jay", ScientificName = "Cyanocitta cristata", Category = "Animal", ImageUrl = [], Description = "A bright blue songbird." }
         };
 
         public Task<List<Organism>> GetAllAsync() => Task.FromResult(_items);

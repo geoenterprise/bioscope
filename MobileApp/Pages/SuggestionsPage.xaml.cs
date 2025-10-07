@@ -12,7 +12,7 @@ namespace MobileApp;
 
 public partial class SuggestionsPage : ContentPage
 {
-    
+
     public SuggestionsPage(string json)
     {
         InitializeComponent();
@@ -24,16 +24,16 @@ public partial class SuggestionsPage : ContentPage
             var suggestionsJson = result.GetProperty("suggestions").GetRawText();
             var suggestions = JsonSerializer.Deserialize<List<Suggestion>>(suggestionsJson);
 
-            
+
             if (suggestions != null)
             {
                 SuggestionsCollection.ItemsSource = suggestions;
             }
-            
+
             else
             {
                 WarningLabel.Text = "We did not find any suggestion.";
-              
+
 
             }
 
@@ -55,8 +55,17 @@ public partial class SuggestionsPage : ContentPage
 
         }
 
-        
+
+
+    }
     
+    private async void OnSuggestionClick(object sender, EventArgs e)
+    {
+        if (sender is Frame frame && frame.BindingContext is Suggestion selectedSuggestion)
+        {
+            // Go to the suggestion details page
+            await Navigation.PushAsync(new SuggestionDetailsPage(selectedSuggestion));
+        }
     }
 
 }
