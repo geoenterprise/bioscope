@@ -59,7 +59,7 @@ public partial class SuggestionsPage : ContentPage
 
     }
     
-    private async void OnSuggestionTapped(object sender, EventArgs e)
+    private async void OnSuggestionClick(object sender, EventArgs e)
     {
         if (sender is Frame frame && frame.BindingContext is Suggestion selectedSuggestion)
         {
