@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace MobileApp.Models
+namespace PlantAnimalApi.Models
 {
     public class SimilarImages
     {
