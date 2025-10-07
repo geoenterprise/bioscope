@@ -16,7 +16,7 @@ namespace PlantAnimalApi.Data
 
         protected override void OnModelCreating(ModelBuilder b)
         {
-            b.UseSnakeCaseNamingConvention();
+            // b.UseSnakeCaseNamingConvention();
 
             b.Entity<User>(e =>
             {
