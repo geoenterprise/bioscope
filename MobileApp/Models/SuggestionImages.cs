@@ -13,7 +13,7 @@ namespace MobileApp.Models
         [JsonPropertyName("url_small")]
         public string Url_Small { get; set; } = string.Empty;
 
-        // puedes agregar más campos si quieres
+      
     }
 
 }
