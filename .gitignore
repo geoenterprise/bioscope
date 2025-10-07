@@ -5,6 +5,12 @@
 
 # dotenv files
 .env
+Api/.env
+MobileApp/.env
+
+# local appsettings with secrets
+Api/appsettings.Development.json
+**/*.Local.json
 
 # User-specific files
 *.rsuser

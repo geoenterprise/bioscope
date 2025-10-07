@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-namespace PlantAnimalApi.Models
 
+namespace PlantAnimalApi.Models
 
 {
     public class Organism
