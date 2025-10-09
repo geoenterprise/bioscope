@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Microsoft.Maui.Controls;
-// Import your DTO or User class namespace
-using MobileApp.Models;  // or wherever your shared User/DTO is
+using Microsoft.Maui.Storage;
 
 namespace MobileApp.Pages
 {
@@ -11,14 +11,22 @@ namespace MobileApp.Pages
     {
         private readonly HttpClient _httpClient;
 
-        public LoginPage()
+        // Match the JSON returned by /api/auth/login.
+        private sealed record LoginResponse(string token);
+
+        // Use DI: HttpClient is provided by MauiProgram
+        public LoginPage(HttpClient httpClient)
         {
             InitializeComponent();
+            _httpClient = httpClient;
 
-            _httpClient = new HttpClient
+            // Attach saved token (if any)
+            var savedToken = Preferences.Get("auth_token", null);
+            if (!string.IsNullOrWhiteSpace(savedToken))
             {
-                BaseAddress = new Uri("https://<your-api-url-or-localhost>:<port>/")
-            };
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", savedToken);
+            }
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
@@ -36,23 +44,36 @@ namespace MobileApp.Pages
 
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
-                if (response.IsSuccessStatusCode)
+                var resp = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
+
+                if (!resp.IsSuccessStatusCode)
                 {
-                    var user = await response.Content.ReadFromJsonAsync<User>();
-                    await DisplayAlert("Welcome", $"Hello, {user.UserName}", "Continue");
-                    // Navigate to a home page, e.g.:
-                    // await Navigation.PushAsync(new HomePage());
+                    // Keep generic in prod
+                    await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
+                    return;
                 }
-                else
+
+                var body = await resp.Content.ReadFromJsonAsync<LoginResponse>();
+                if (body is null || string.IsNullOrWhiteSpace(body.token))
                 {
-                    var msg = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Login Failed", msg, "OK");
+                    await DisplayAlert("Login Failed", "Please try again.", "OK");
+                    return;
                 }
+
+                // Store token and attach to future requests
+                Preferences.Set("auth_token", body.token);
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", body.token);
+
+                await DisplayAlert("Welcome", "Login successful!", "Continue");
+
+                // TODO: navigate to main page
+                // await Navigation.PushAsync(new HomePage());
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Unable to login: {ex.Message}", "OK");
+                // Keep this generic in prod
+                await DisplayAlert("Error", $"Unable to login. {ex.Message}", "OK");
             }
         }
 

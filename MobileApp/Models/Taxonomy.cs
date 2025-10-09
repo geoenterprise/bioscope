@@ -5,22 +5,22 @@ namespace MobileApp.Models
     public class Taxonomy
     {
         [JsonPropertyName("class")]
-        public string Class { get; set; }
+        public string? Class { get; set; }
 
         [JsonPropertyName("genus")]
-        public string Genus { get; set; }
+        public string? Genus { get; set; }
 
         [JsonPropertyName("order")]
-        public string Order { get; set; }
+        public string? Order { get; set; }
 
         [JsonPropertyName("family")]
-        public string Family { get; set; }
+        public string? Family { get; set; }
 
         [JsonPropertyName("phylum")]
-        public string Phylum { get; set; }
+        public string? Phylum { get; set; }
 
         [JsonPropertyName("kingdom")]
-        public string Kingdom { get; set; }
+        public string? Kingdom { get; set; }
     }
 
 }
