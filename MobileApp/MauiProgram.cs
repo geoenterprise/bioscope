@@ -25,6 +25,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<SignupPage>();
 
         return builder.Build();
     }
