@@ -26,11 +26,14 @@ static string ToNpgsql(string url)
     return url; // already in Npgsql format
 }
 
+
+DotNetEnv.Env.Load();
 // ---- DB connection ----
 // Prefer env var DATABASE_URL in prod (Render/Azure), fall back to appsettings connstring in dev.
 var raw = Environment.GetEnvironmentVariable("DATABASE_URL")
-          ?? builder.Configuration.GetConnectionString("BioscopeDb")
-          ?? throw new InvalidOperationException("Missing DB connection string.");
+        ?? throw new InvalidOperationException("Missing DB connection string.");
+
+Console.WriteLine($"Connection string: {raw}");
 
 builder.Services.AddDbContext<BioscopeDbContext>(opt =>
     opt.UseNpgsql(ToNpgsql(raw)).UseSnakeCaseNamingConvention());

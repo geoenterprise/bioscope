@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 // Import your DTO or User class namespace
 using MobileApp.Models;  // or wherever your shared User/DTO is
 
+
 namespace MobileApp.Pages
 {
     public partial class LoginPage : ContentPage
@@ -40,7 +41,7 @@ namespace MobileApp.Pages
                 if (response.IsSuccessStatusCode)
                 {
                     var user = await response.Content.ReadFromJsonAsync<User>();
-                    await DisplayAlert("Welcome", $"Hello, {user.UserName}", "Continue");
+                    await DisplayAlert("Welcome", $"Hello, {user.DisplayName}", "Continue");
                     // Navigate to a home page, e.g.:
                     // await Navigation.PushAsync(new HomePage());
                 }
@@ -58,7 +59,8 @@ namespace MobileApp.Pages
 
         private async void OnSignupClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            Console.WriteLine("All is fine");
+            // await Navigation.PushAsync(new SignupPage());
         }
     }
 }

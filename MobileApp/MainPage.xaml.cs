@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using System.Linq;
 using Microsoft.Maui.Media;
+using MobileApp.Pages;
 
 namespace MobileApp;
 
@@ -34,6 +35,14 @@ public partial class MainPage : ContentPage
         {
             await DisplayAlert("Error", $"Error in take the photo: {ex.Message}", "OK");
         }
+    }
+
+    private async void LoginBioscope(object sender, EventArgs e)
+    {
+
+        await Navigation.PushAsync(new LoginPage());
+     
+        
         
 
     }
