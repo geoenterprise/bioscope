@@ -62,8 +62,11 @@ namespace MobileApp.Pages
 
                 // Store token and attach to future requests
                 Preferences.Set("auth_token", body.token);
+                Preferences.Set("user_id", body.userId.ToString());
+                Preferences.Set("display_name", body.displayName);
+
                 _httpClient.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", body.token);
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", body.token);
 
                 await DisplayAlert("Welcome", "Login successful!", "Continue");
 
