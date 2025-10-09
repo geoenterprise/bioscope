@@ -12,8 +12,8 @@ namespace MobileApp.Pages
         private readonly HttpClient _httpClient;
 
         // Match the JSON returned by /api/auth/login.
-        private sealed record LoginResponse(string token);
-
+        private sealed record LoginResponse(string token, Guid userId, string displayName);
+        
         // Use DI: HttpClient is provided by MauiProgram
         public LoginPage(HttpClient httpClient)
         {
