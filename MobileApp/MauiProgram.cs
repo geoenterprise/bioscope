@@ -1,5 +1,7 @@
-﻿using MobileApp.Services;
+﻿using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MobileApp.Services; 
+using MobileApp.Pages; 
 
 
 namespace MobileApp;
@@ -23,7 +25,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddTransient<LoginPage>();
-        
+
         return builder.Build();
     }
 }
