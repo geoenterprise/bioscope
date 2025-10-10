@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlantAnimalApi.Data;
@@ -12,9 +13,11 @@ using PlantAnimalApi.Data;
 namespace Api.Migrations
 {
     [DbContext(typeof(BioscopeDbContext))]
-    partial class BioscopeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251009184742_AddPlantName")]
+    partial class AddPlantName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,18 +109,13 @@ namespace Api.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("longitude");
 
-                    b.Property<string>("Plant_Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("plant_name");
-
-                    b.Property<string>("Scientific_Name")
-                        .HasColumnType("text")
-                        .HasColumnName("scientific_name");
-
                     b.Property<DateTimeOffset?>("TakenAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("taken_at");
+
+                    b.Property<string>("TopMatchName")
+                        .HasColumnType("text")
+                        .HasColumnName("top_match_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -127,15 +125,11 @@ namespace Api.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.Property<string>("Wiki_Description")
-                        .HasColumnType("text")
-                        .HasColumnName("wiki_description");
-
                     b.HasKey("Id")
                         .HasName("pk_discoveries");
 
-                    b.HasIndex("Plant_Name")
-                        .HasDatabaseName("ix_discoveries_plant_name");
+                    b.HasIndex("TopMatchName")
+                        .HasDatabaseName("ix_discoveries_top_match_name");
 
                     b.HasIndex("IsPublic", "CreatedAt")
                         .HasDatabaseName("ix_discoveries_is_public_created_at");

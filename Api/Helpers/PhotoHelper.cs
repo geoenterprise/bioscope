@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using PlantAnimalApi.Models;
 using System.Text.Json;
-using DotNetEnv;
+using dotenv.net;
+
+
 
 
 
@@ -35,8 +37,8 @@ namespace MobileApp.Helpers
         {
             try
             {
-                DotNetEnv.Env.Load();
-
+            
+                DotEnv.Load();
                 string apiKey = Environment.GetEnvironmentVariable("PLANT_ID_API_KEY");
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Api-Key", apiKey);

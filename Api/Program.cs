@@ -6,6 +6,10 @@ using EFCore.NamingConventions;
 using PlantAnimalApi.Data;
 using PlantAnimalApi.Services;
 
+using dotenv.net;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Helper for postgres connection strings
@@ -26,17 +30,17 @@ static string ToNpgsql(string url)
     return url; // already in Npgsql format
 }
 
-
-DotNetEnv.Env.Load();
+DotEnv.Load();
 // ---- DB connection ----
 // Prefer env var DATABASE_URL in prod (Render/Azure), fall back to appsettings connstring in dev.
 var raw = Environment.GetEnvironmentVariable("DATABASE_URL")
         ?? throw new InvalidOperationException("Missing DB connection string.");
 
-Console.WriteLine($"Connection string: {raw}");
+var npgsqlConn = ToNpgsql(raw).Trim();
+Console.WriteLine($"Connection string: {npgsqlConn}");
 
 builder.Services.AddDbContext<BioscopeDbContext>(opt =>
-    opt.UseNpgsql(ToNpgsql(raw)).UseSnakeCaseNamingConvention());
+    opt.UseNpgsql(npgsqlConn).UseSnakeCaseNamingConvention());
 
 // ---- Auth (JWT) ----
 var jwtKey = builder.Configuration["JWT:Key"]
@@ -90,3 +94,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
