@@ -7,6 +7,7 @@ using PlantAnimalApi.Data;
 using PlantAnimalApi.Services;
 
 using dotenv.net;
+using Api.Helpers;
 
 
 
@@ -34,13 +35,13 @@ DotEnv.Load();
 // ---- DB connection ----
 // Prefer env var DATABASE_URL in prod (Render/Azure), fall back to appsettings connstring in dev.
 var raw = Environment.GetEnvironmentVariable("DATABASE_URL")
-        ?? throw new InvalidOperationException("Missing DB connection string.");
+          ?? builder.Configuration.GetConnectionString("BioscopeDb")
+          ?? throw new InvalidOperationException("Missing DB connection string.");
 
-var npgsqlConn = ToNpgsql(raw).Trim();
-Console.WriteLine($"Connection string: {npgsqlConn}");
+var finalConnectionString = NpgsqlExtensions.ToNpgsqlBuilder(raw);
 
 builder.Services.AddDbContext<BioscopeDbContext>(opt =>
-    opt.UseNpgsql(npgsqlConn).UseSnakeCaseNamingConvention());
+    opt.UseNpgsql(finalConnectionString).UseSnakeCaseNamingConvention());
 
 // ---- Auth (JWT) ----
 var jwtKey = builder.Configuration["JWT:Key"]

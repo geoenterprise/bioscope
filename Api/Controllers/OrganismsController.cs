@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlantAnimalApi.Services;
 using PlantAnimalApi.Models;
-using MobileApp.Helpers;
+using Api.Helpers;
 using System.Text.Json; 
 
 namespace PlantAnimalApi.Controllers

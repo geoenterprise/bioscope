@@ -40,7 +40,7 @@ public partial class MainPage : ContentPage
     private async void LoginBioscope(object sender, EventArgs e)
     {
 
-        await Navigation.PushAsync(new LoginPage());
+        await Navigation.PushAsync(new LoginTest());
      
         
         

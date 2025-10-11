@@ -10,9 +10,9 @@ namespace Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "ix_discoveries_top_match_name",
-                table: "discoveries");
+            // migrationBuilder.DropIndex(
+            //     name: "ix_discoveries_top_match_name",
+            //     table: "discoveries");
 
             migrationBuilder.RenameColumn(
                 name: "top_match_name",

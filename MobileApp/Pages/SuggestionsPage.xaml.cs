@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 
 
-namespace MobileApp;
+namespace MobileApp.Pages;
 
 public partial class SuggestionsPage : ContentPage
 {

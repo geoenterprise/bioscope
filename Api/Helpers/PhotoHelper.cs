@@ -7,12 +7,7 @@ using PlantAnimalApi.Models;
 using System.Text.Json;
 using dotenv.net;
 
-
-
-
-
-
-namespace MobileApp.Helpers
+namespace Api.Helpers
 {
     public static class PhotoHelper
     {
