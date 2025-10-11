@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 
 
-namespace MobileApp;
+namespace MobileApp.Pages;
 
 public partial class SuggestionDetailsPage : ContentPage
 {
@@ -21,27 +21,27 @@ public partial class SuggestionDetailsPage : ContentPage
 
         _suggestion = suggestion ?? throw new ArgumentNullException(nameof(suggestion));
 
-  
+
         if (_suggestion.PlantDetails == null)
             _suggestion.PlantDetails = new PlantDetails();
 
         if (_suggestion.PlantDetails.Common_Names == null || !_suggestion.PlantDetails.Common_Names.Any())
             _suggestion.PlantDetails.Common_Names = new List<string> { "Unknown" };
- 
+
         if (_suggestion.PlantDetails.Wiki_Description == null)
             _suggestion.PlantDetails.Wiki_Description = new WikiDescription
             {
                 Value = "No description available."
             };
 
-   
-        
 
- 
         BindingContext = _suggestion;
-      
-
     }
+
+    private async void SaveSuggestion(object sender, EventArgs e)
+    {
+    }
+
 
 
 

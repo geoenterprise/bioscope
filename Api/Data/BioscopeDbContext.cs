@@ -36,7 +36,7 @@ namespace PlantAnimalApi.Data
                 e.Property(x => x.ApiResult).HasColumnType("jsonb");
                 e.HasIndex(x => new { x.UserId, x.CreatedAt });
                 e.HasIndex(x => new { x.IsPublic, x.CreatedAt });
-                e.HasIndex(x => x.TopMatchName);
+                e.HasIndex(x => x.Plant_Name);
                 e.HasIndex(x => new { x.Latitude, x.Longitude });
                 e.HasOne(x => x.User).WithMany(u => u.Discoveries).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             });

@@ -82,7 +82,8 @@ namespace MobileApp.Pages
 
         private async void OnSignupClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            Console.WriteLine("All is fine");
+            // await Navigation.PushAsync(new SignupPage());
         }
     }
 }
