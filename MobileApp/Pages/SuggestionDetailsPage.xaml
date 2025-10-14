@@ -66,13 +66,13 @@
             <Button
                 Text="Save Discover" 
                 SemanticProperties.Hint="Save the plant in your discoveries"
-                
+                Clicked="SaveSuggestion"
                 HorizontalOptions="Fill" />
     
             <Button
                 Text="Cancel" 
                 SemanticProperties.Hint="Take the photo again"
-                Clicked="SaveSuggestion"
+                
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView> 

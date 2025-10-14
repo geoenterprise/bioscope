@@ -40,16 +40,57 @@ public partial class SuggestionDetailsPage : ContentPage
 
     private async void SaveSuggestion(object sender, EventArgs e)
     {
+        try
+        {
+            var discoveryData = new
+            {
+                WikiDescription = _suggestion.PlantDetails.Wiki_Description?.Value ?? "",
+                Confidence = _suggestion.Probability,
+                AssetUrl = _suggestion.Similar_Images.FirstOrDefault()?.Url ?? "",
+                CommonName = _suggestion.PlantDetails.Common_Names.FirstOrDefault() ?? "Unknown",
+                ScientificName = _suggestion.PlantDetails.Scientific_Name ?? "",
+                Comment = CommentEditor.Text?.Trim()
+            };
+
+            #if DEBUG
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
+            using var httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://xxxxxxxx:7022/")
+            };
+            #else
+            using var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://xxxxxxx:7022/")
+            };
+            #endif
+
+            var response = await httpClient.PostAsJsonAsync("api/discoveries/create", discoveryData);
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Response", responseBody, "OK");
+
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Great!", "Discovery was created correctly.", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", $"Status: {response.StatusCode}\n{responseBody}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
     }
 
 
 
 
-
-
-    
-    
-    
 
 }
 
