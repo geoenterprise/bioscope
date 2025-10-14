@@ -59,23 +59,36 @@ public partial class SuggestionDetailsPage : ContentPage
             };
             using var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("https://xxxxxxxx:7022/")
+                BaseAddress = new Uri("https://xxxxxxxxx:7022/")
             };
             #else
             using var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://xxxxxxx:7022/")
+                BaseAddress = new Uri("https://xxxxxxxxxxx:7022/")
             };
             #endif
 
             var response = await httpClient.PostAsJsonAsync("api/discoveries/create", discoveryData);
 
             var responseBody = await response.Content.ReadAsStringAsync();
-            await DisplayAlert("Response", responseBody, "OK");
+            // await DisplayAlert("Response", responseBody, "OK");
+
+            using var doc = JsonDocument.Parse(responseBody);
+
+            var userId = doc.RootElement
+                .GetProperty("discovery")
+                .GetProperty("user")
+                .GetProperty("id")
+                .GetGuid(); 
+
+
+            // await DisplayAlert("UserId", userId.ToString(), "OK");
 
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Great!", "Discovery was created correctly.", "OK");
+                
+                await Navigation.PushAsync(new DiscoveriesPage(userId.ToString()));
             }
             else
             {

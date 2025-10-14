@@ -87,7 +87,35 @@ public class DiscoveriesController : ControllerBase
     //     });
     // }
 
-    // Create discovery (owner)
+    // [Authorize]
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetByUserId(Guid userId, int take = 100, int skip = 0)
+    {
+        var q = _db.Discoveries.AsNoTracking()
+        .Where(d => d.UserId == userId)
+        .OrderByDescending(d => d.DiscoveryId)
+        .Skip(skip).Take(take)
+        .Select(d => new
+        {
+            d.DiscoveryId,
+            d.UserId,
+            d.CommonName,
+            d.ScientificName,
+            d.WikiDescription,
+            d.Confidence,
+            d.AssetUrl
+        });
+
+        var discoveries = await q.ToListAsync();
+
+        if (!discoveries.Any())
+            return NotFound(new { message = "No discoveries found for this user." });
+
+        return Ok(discoveries);
+    }
+
+
+   
     // [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> Create(CreateDiscoveryRequest req)
