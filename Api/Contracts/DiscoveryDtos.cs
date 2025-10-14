@@ -1,16 +1,14 @@
 namespace PlantAnimalApi.Contracts;
 
 public record CreateDiscoveryRequest(
-    string? TopMatchName,
+    string? CommonName,
     decimal? Confidence,
-    string? ApiProvider,
-    string? ApiResult,   // JSON string from Plant.id
-    DateTimeOffset? TakenAt,
-    double? Latitude,
-    double? Longitude,
-    bool IsPublic,
-    List<CreateMediaItem>? Media // optional immediate media entries
+    string? AssetUrl,
+    string? ScientificName,
+    string? WikiDescription,
+    string? Comment
 );
+
 
 public record CreateMediaItem(string Url, string? ThumbUrl, string? ContentType, int? Width, int? Height, long? SizeBytes);
 
