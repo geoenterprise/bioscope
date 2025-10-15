@@ -8,9 +8,12 @@ namespace MobileApp;
 
 public partial class MainPage : ContentPage
 {
+    private readonly HttpClient _httpClient;
+
     public MainPage()
     {
         InitializeComponent();
+        _httpClient = new HttpClient();
     }
 
     //The method to take a photo
@@ -39,12 +42,8 @@ public partial class MainPage : ContentPage
 
     private async void LoginBioscope(object sender, EventArgs e)
     {
-
-        await Navigation.PushAsync(new LoginTest());
-     
-        
-        
-
+        // Pass the existing _httpClient instance to LoginPage
+        await Navigation.PushAsync(new MobileApp.Pages.LoginPage(_httpClient));
     }
     // private void OnCounterClicked(object sender, EventArgs e)
     // {
