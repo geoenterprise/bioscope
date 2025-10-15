@@ -13,7 +13,7 @@
                Placeholder="Password"
                IsPassword="True"
                ClearButtonVisibility="WhileEditing" />
-        <Button Text="Login"
+        <Button Text="Login" Clicked="OnLoginClicked"
               
                 BackgroundColor="#007aff"
                 TextColor="White"
