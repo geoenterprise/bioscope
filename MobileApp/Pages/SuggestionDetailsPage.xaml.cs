@@ -59,12 +59,12 @@ public partial class SuggestionDetailsPage : ContentPage
             };
             using var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("https://xxxxxxxxx:7022/")
+                BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
             };
             #else
             using var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://xxxxxxxxxxx:7022/")
+                BaseAddress = new Uri("https://xxxxxxxxxxxx:7022/")
             };
             #endif
 
