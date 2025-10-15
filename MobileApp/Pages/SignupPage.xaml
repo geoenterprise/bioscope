@@ -38,7 +38,8 @@
                 <Button Text="Log in"
                         Clicked="OnLoginClicked"
                         Padding="0"
-                        BackgroundColor="Transparent" />
+                        BackgroundColor="Transparent"
+                     TextColor="#007aff" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
