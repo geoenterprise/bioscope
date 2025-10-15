@@ -33,12 +33,12 @@ public partial class DiscoveriesPage : ContentPage
             };
         using var httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
+            BaseAddress = new Uri("https://xxxxxxx:7022/")
         };
         #else
         using var httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
+            BaseAddress = new Uri("https://xxxxxxxx:7022/")
         };
         #endif
 
@@ -67,7 +67,8 @@ public partial class DiscoveriesPage : ContentPage
             }
             else
             {
-                await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
+               
+                // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
             }
             
             DiscoveriesCollection.ItemsSource = discoveries;
@@ -75,14 +76,13 @@ public partial class DiscoveriesPage : ContentPage
 
     }
     
-    private async void OnDiscoveryClick(object sender, EventArgs e)
+    private async void OnDetailsClick(object sender, EventArgs e)
+{
+    if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
     {
-        if (sender is Frame frame && frame.BindingContext is Discovery selectedDiscovery)
-        {
-            // Navegar a la página de detalles del discovery
-            await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
-        }
+        await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
     }
+}
 
 }
 
