@@ -14,7 +14,7 @@ namespace MobileApp.Pages
         // Match the JSON returned by /api/auth/login.
         private sealed record LoginResponse(string token, Guid userId, string displayName);
         
-        // Use DI: HttpClient is provided by MauiProgram
+        // DI: HttpClient is provided by MauiProgram
         public LoginPage(HttpClient httpClient)
         {
             InitializeComponent();
@@ -82,8 +82,7 @@ namespace MobileApp.Pages
 
         private async void OnSignupClicked(object sender, EventArgs e)
         {
-            Console.WriteLine("All is fine");
-            // await Navigation.PushAsync(new SignupPage());
+            await Navigation.PushAsync(new SignupPage(_httpClient));
         }
     }
 }

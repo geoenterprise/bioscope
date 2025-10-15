@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApp.Pages.SignupPage"
-             Title="Sign Up">
+<ContentPage 
+    x:Class="MobileApp.Pages.SignupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    
+    Title="Create your account">
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="15">
 
-            <Label Text="Create Account" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Sign up" FontSize="24" FontAttributes="Bold" />
 
-            <Entry x:Name="DisplayNameEntry" Placeholder="Display Name" />
-            <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
-            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
+            <Entry x:Name="DisplayNameEntry"
+                   Placeholder="Display name"
+                   ReturnType="Next" />
 
-            <Button Text="Sign Up" Clicked="OnSignupClicked" />
-            <Button Text="Already have an account? Log in"
-                    Clicked="OnLoginClicked"
-                    BackgroundColor="Transparent"
-                    TextColor="DodgerBlue" />
+            <Entry x:Name="EmailEntry"
+                   Placeholder="Email"
+                   Keyboard="Email"
+                   ReturnType="Next" />
 
+            <Entry x:Name="PasswordEntry"
+                   Placeholder="Password"
+                   IsPassword="True"
+                   ReturnType="Next" />
+
+            <Entry x:Name="ConfirmPasswordEntry"
+                   Placeholder="Confirm password"
+                   IsPassword="True"
+                   ReturnType="Done" />
+
+            <Button Text="Create account"
+                    Clicked="OnSignupClicked" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,6,0,0">
+                <Label Text="Already have an account?" />
+                <Button Text="Log in"
+                        Clicked="OnLoginClicked"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                     TextColor="#007aff" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

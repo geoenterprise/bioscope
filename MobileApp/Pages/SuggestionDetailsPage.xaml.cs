@@ -47,8 +47,8 @@ public partial class SuggestionDetailsPage : ContentPage
                 WikiDescription = _suggestion.PlantDetails.Wiki_Description?.Value ?? "",
                 Confidence = _suggestion.Probability,
                 AssetUrl = _suggestion.Similar_Images.FirstOrDefault()?.Url ?? "",
-                CommonName = _suggestion.PlantDetails.Common_Names.FirstOrDefault() ?? "Unknown",
-                ScientificName = _suggestion.PlantDetails.Scientific_Name ?? "",
+                CommonName = _suggestion.PlantDetails?.Common_Names?.FirstOrDefault() ?? "Unknown",
+                ScientificName = _suggestion.PlantDetails?.Scientific_Name ?? "",
                 Comment = CommentEditor.Text?.Trim()
             };
 
