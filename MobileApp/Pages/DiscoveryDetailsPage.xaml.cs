@@ -29,7 +29,7 @@ public partial class DiscoveryDetailsPage : ContentPage
             WriteIndented = true 
         });
 
-        Application.Current.MainPage.DisplayAlert("Discovery Raw Data", json, "OK");
+        Application.Current?.MainPage?.DisplayAlert("Discovery Raw Data", json, "OK");
 
 
 

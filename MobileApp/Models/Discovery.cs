@@ -6,7 +6,7 @@ namespace MobileApp.Models
     public class Discovery
     {
         public Guid DiscoveryId { get; set; }
-        public string CommonName { get; set; }
+        public string? CommonName { get; set; }
         public Guid UserId { get; set; }
 
         public decimal? Confidence { get; set; }
