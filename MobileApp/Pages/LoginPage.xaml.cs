@@ -82,7 +82,7 @@ namespace MobileApp.Pages
 
         private async void OnSignupClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            await Navigation.PushAsync(new SignupPage(_httpClient));
         }
     }
 }
