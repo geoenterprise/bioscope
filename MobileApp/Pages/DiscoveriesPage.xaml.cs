@@ -33,12 +33,12 @@ public partial class DiscoveriesPage : ContentPage
             };
         using var httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://xxxxxxx:7022/")
+            BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
         };
         #else
         using var httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://xxxxxxxx:7022/")
+            BaseAddress = new Uri("https://xxxxxxxxx:7022/")
         };
         #endif
 

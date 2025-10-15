@@ -26,7 +26,7 @@ public partial class PreviewPage : ContentPage
             PreviewImage.Source = ImageSource.FromStream(() => stream);
         }
     }
-    
+
 
     private async void IdentifyClicked(object sender, EventArgs e)
     {
@@ -36,17 +36,17 @@ public partial class PreviewPage : ContentPage
         {
             HttpClient client;
 
-            #if DEBUG
-                var handler = new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-                };
-                client = new HttpClient(handler);
-            #else
+#if DEBUG
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
+            client = new HttpClient(handler);
+#else
                 client = new HttpClient();
-            #endif
-    
-            
+#endif
+
+
             using var form = new MultipartFormDataContent();
             using var stream = await _photo.OpenReadAsync();
             var imageContent = new StreamContent(stream);
@@ -56,7 +56,7 @@ public partial class PreviewPage : ContentPage
 
 
 
-            var response = await client.PostAsync("https://xxxxxxxxxx:7022/api/organisms/upload", form);
+            var response = await client.PostAsync("https://xxxxxxxx:7022/api/organisms/upload", form);
             var json = await response.Content.ReadAsStringAsync();
 
             await Navigation.PushAsync(new SuggestionsPage(json));
@@ -66,6 +66,14 @@ public partial class PreviewPage : ContentPage
             Console.WriteLine($"Errorrrrrr: {ex.Message}");
             await DisplayAlert("Errorrrrrrr", ex.Message, "OK");
         }
+    }
+    
+
+    private async void DiscoveriesClicked(object sender, EventArgs e)
+    {
+        var testUserId = "14385e5f-f4bc-4202-a55e-b417a99d3dc0";
+        await Navigation.PushAsync(new DiscoveriesPage(testUserId));
+        
     }
 
 

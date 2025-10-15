@@ -25,6 +25,12 @@
                 SemanticProperties.Hint="Confirm to send the image to the AI"
                 Clicked="IdentifyClicked"
                 HorizontalOptions="Fill" />
+            
+            <Button
+                Text="Review Discoveries" 
+                SemanticProperties.Hint="It will display all your discoveries"
+                Clicked="DiscoveriesClicked"
+                HorizontalOptions="Fill" />
   
             <!-- <Button 
                 Text="Get Weather" 
