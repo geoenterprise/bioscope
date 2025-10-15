@@ -19,8 +19,8 @@
                 TextColor="White"
                 CornerRadius="10" />
         <Label Text="Don't have an account?" HorizontalOptions="Center" />
-        <Button Text="Sign Up"
-             
+        <Button Text="Sign Up" Clicked="OnSignupClicked"
+
                 BackgroundColor="Transparent"
                 TextColor="#007aff" />
     </VerticalStackLayout>
