@@ -6,7 +6,7 @@ using System.Text.Json;
 
 
 
-namespace MobileApp;
+namespace MobileApp.Pages;
 
 public partial class PreviewPage : ContentPage
 {
@@ -56,7 +56,7 @@ public partial class PreviewPage : ContentPage
 
 
 
-            var response = await client.PostAsync("https://localhost:7022/api/organisms/upload", form);
+            var response = await client.PostAsync("https://xxxxxxx:7022/api/organisms/upload", form);
             var json = await response.Content.ReadAsStringAsync();
 
             await Navigation.PushAsync(new SuggestionsPage(json));

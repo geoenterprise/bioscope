@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApp.Pages.SuggestionDetailsPage"
-             Title="Suggestion Details">
+             x:Class="MobileApp.Pages.DiscoveryDetailsPage"
+             Title="Discovery Details">
 
     <ScrollView >
         <VerticalStackLayout Padding="20" Spacing="10">        
@@ -13,7 +13,7 @@
                 HasShadow="True"
                 HorizontalOptions="Fill">
                 
-                <VerticalStackLayout Spacing="5">
+                <!-- <VerticalStackLayout Spacing="5">
                     <Image Source="{Binding Similar_Images[0].Url}"
                         x:Name="SuggestionImage"
                         Aspect="AspectFill"/>
@@ -60,17 +60,17 @@
                                 Placeholder="Write your notes here"
                                 AutoSize="TextChanges"
                                 HeightRequest="80"/>  
-                </VerticalStackLayout>     
+                </VerticalStackLayout>      -->
             </Frame> 
             <!--Buttons-->
             <Button
-                Text="Save Discover" 
+                Text="Update Discovery" 
                 SemanticProperties.Hint="Save the plant in your discoveries"
-                Clicked="SaveSuggestion"
+                
                 HorizontalOptions="Fill" />
     
             <Button
-                Text="Cancel" 
+                Text="Delete Discovery" 
                 SemanticProperties.Hint="Take the photo again"
                 
                 HorizontalOptions="Fill" />
