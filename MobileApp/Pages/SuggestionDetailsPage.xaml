@@ -71,8 +71,8 @@
     
             <Button
                 Text="Cancel" 
-                SemanticProperties.Hint="Take the photo again"
-                
+                SemanticProperties.Hint="Go to the main page"
+                Clicked="OnCancelClick"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView> 

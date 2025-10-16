@@ -56,7 +56,7 @@ public partial class PreviewPage : ContentPage
 
 
 
-            var response = await client.PostAsync("https://bioscopeapi.onrender.com/api/organisms/upload", form);
+            var response = await client.PostAsync("https://192.168.1.72:4077/api/organisms/upload", form);
             var json = await response.Content.ReadAsStringAsync();
 
             await Navigation.PushAsync(new SuggestionsPage(json));

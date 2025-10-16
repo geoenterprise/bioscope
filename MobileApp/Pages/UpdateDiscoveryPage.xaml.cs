@@ -47,7 +47,7 @@ public partial class UpdateDescriptionPage : ContentPage
             };
         using var httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
+            BaseAddress = new Uri("https://192.168.1.72:4077/")
         };
         #else
             using var httpClient = new HttpClient
@@ -60,7 +60,6 @@ public partial class UpdateDescriptionPage : ContentPage
         {
             var updateData = new
             {
-        
                 WikiDescription = _discovery.WikiDescription
             };
 
@@ -68,15 +67,17 @@ public partial class UpdateDescriptionPage : ContentPage
                 JsonSerializer.Serialize(updateData),
                 Encoding.UTF8,
                 "application/json"
-            );
+            );        
 
-            var response = await httpClient.PutAsync($"api/discoveries/updateDescription/{_discovery.DiscoveryId}", content);
+            var response = await httpClient.PatchAsync($"api/discoveries/updateDescription/{_discovery.DiscoveryId}", content);
 
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Great!", "Your Description was updated", "OK");
 
                 _originalDescription = _discovery.WikiDescription;
+
+                await Navigation.PushAsync(new DiscoveriesPage(_discovery.UserId.ToString()));
             }
             else
             {
