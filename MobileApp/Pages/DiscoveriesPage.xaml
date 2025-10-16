@@ -35,8 +35,8 @@
                                 <HorizontalStackLayout HorizontalOptions="End"
                                                        Spacing="5">
                                     <Button Text="Details" FontSize="10" Clicked="OnDetailsClick"/>
-                                    <Button Text="Update" FontSize="10"/>
-                                    <Button Text="Delete" FontSize="10" TextColor="Red"/>
+                                    <Button Text="Update" FontSize="10" Clicked="OnDescriptionClick"/>
+                                    <Button Text="Delete" FontSize="10" TextColor="Red" Clicked="OnDeleteClick"/>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 

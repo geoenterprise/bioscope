@@ -22,51 +22,33 @@ public partial class DiscoveriesPage : ContentPage
 
         _userId = Guid.Parse(userId);
 
+
+        LoadDiscoveries();
+
+    }
+
+    private async void LoadDiscoveries()
+    {
 #if DEBUG
         var handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         };
-        _httpClient = new HttpClient(handler)
+        using var httpClient = new HttpClient(handler)
         {
             BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
         };
 #else
-        _httpClient = new HttpClient
+        using var httpClient = new HttpClient
         {
             BaseAddress = new Uri("https://xxxxxxxxx:7022/")
         };
 #endif
 
-        // 🧭 Toolbar (simple navigation)
-        ToolbarItems.Clear();
-        ToolbarItems.Add(new ToolbarItem("Home", null, async () => await Navigation.PopToRootAsync()));
-        ToolbarItems.Add(new ToolbarItem("My Discoveries", null, async () => await Navigation.PopAsync()));
-        ToolbarItems.Add(new ToolbarItem
-        {
-            Text = "Logout",
-            Command = new Command(async () => await OnLogoutClicked())
-        });
-        // ToolbarItems.Add(new ToolbarItem("Logout", null, OnLogoutClicked));
+        //alert with the user id. Only for testing
+        // await DisplayAlert("UserId", _userId.ToString(), "OK");
 
-        LoadDiscoveries();
-    }
-
-    private async Task OnLogoutClicked()
-    {
-        var confirm = await DisplayAlert("Sign out", "Are you sure you want to log out?", "Sign out", "Cancel");
-        if (!confirm) return;
-
-        // clear prefs and auth header
-        _auth.ClearSession(_httpClient);
-
-        // ✅ so, this is better than PopToRootAsync — ensures a full reset
-        Application.Current!.MainPage = new NavigationPage(new MainPage());
-    }
-
-    private async void LoadDiscoveries()
-    {
-        var response = await _httpClient.GetAsync($"api/discoveries/user/{_userId}");
+        var response = await httpClient.GetAsync($"api/discoveries/user/{_userId}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -85,7 +67,7 @@ public partial class DiscoveriesPage : ContentPage
             }
             else
             {
-               
+
                 // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
             }
 
@@ -95,9 +77,18 @@ public partial class DiscoveriesPage : ContentPage
 
     private async void OnDetailsClick(object sender, EventArgs e)
     {
-        if (sender is Frame frame && frame.BindingContext is Discovery selectedDiscovery)
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
         {
             await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
         }
     }
+
 }
+
+
+
+
+
+
+
+

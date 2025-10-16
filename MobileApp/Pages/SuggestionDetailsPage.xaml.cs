@@ -53,18 +53,18 @@ public partial class SuggestionDetailsPage : ContentPage
             };
 
             #if DEBUG
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-            using var httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
-            };
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
+                using var httpClient = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri("https://192.168.1.77:4077/")
+                };
             #else
             using var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://xxxxxxxxxxxx:7022/")
+                BaseAddress = new Uri("https://192.168.1.77:4077/")
             };
             #endif
 
@@ -79,7 +79,7 @@ public partial class SuggestionDetailsPage : ContentPage
                 .GetProperty("discovery")
                 .GetProperty("user")
                 .GetProperty("id")
-                .GetGuid(); 
+                .GetGuid();
 
 
             // await DisplayAlert("UserId", userId.ToString(), "OK");
@@ -87,7 +87,7 @@ public partial class SuggestionDetailsPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Great!", "Discovery was created correctly.", "OK");
-                
+
                 await Navigation.PushAsync(new DiscoveriesPage(userId.ToString()));
             }
             else
@@ -100,6 +100,13 @@ public partial class SuggestionDetailsPage : ContentPage
             await DisplayAlert("Error", ex.ToString(), "OK");
         }
     }
+
+    private async void OnCancelClick(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new MainPage());
+    }
+
+    
 
 
 
