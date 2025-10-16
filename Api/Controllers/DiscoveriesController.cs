@@ -180,24 +180,38 @@ public class DiscoveriesController : ControllerBase
         return Ok(new { message = "Discovery saved", discovery = discoveryDto });
         // return CreatedAtAction(nameof(Get), new { id = discovery.DiscoveryId }, new { discovery.DiscoveryId });
     }
-    
 
-    [HttpPut("updateDescription/{id}")]
+
+    [HttpPatch("updateDescription/{id}")]
     public async Task<IActionResult> UpdateDescription(Guid id, [FromBody] UpdateDescriptionDto dtoUpdate)
     {
-      
+
         var discovery = await _db.Discoveries.FindAsync(id);
         if (discovery == null)
             return NotFound("Discovery no found.");
 
-        
+
         discovery.WikiDescription = dtoUpdate.WikiDescription;
-     
+
 
         await _db.SaveChangesAsync();
 
         return Ok(discovery);
     }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteDiscovery(Guid id)
+    {
+        var discovery = await _db.Discoveries.FindAsync(id);
+        if (discovery == null) 
+            return NotFound();
+
+        _db.Discoveries.Remove(discovery);
+        await _db.SaveChangesAsync();
+
+        return NoContent(); 
+    }
+
 
 
     // Toggle visibility (owner)
