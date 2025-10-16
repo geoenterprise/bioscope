@@ -29,12 +29,12 @@ public partial class DiscoveriesPage : ContentPage
         };
         _httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
         };
 #else
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://xxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
         };
 #endif
 
