@@ -93,7 +93,7 @@ public partial class DiscoveriesPage : ContentPage
         }
     }
 
-    private async void OnDiscoveryClick(object sender, EventArgs e)
+    private async void OnDetailsClick(object sender, EventArgs e)
     {
         if (sender is Frame frame && frame.BindingContext is Discovery selectedDiscovery)
         {
