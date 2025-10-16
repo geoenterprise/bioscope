@@ -23,28 +23,28 @@ public partial class DiscoveriesPage : ContentPage
         LoadDiscoveries();
 
     }
-    
+
     private async void LoadDiscoveries()
     {
-        #if DEBUG
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
+#if DEBUG
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
         using var httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://10.189.154.250:7022/")
         };
-        #else
+#else
         using var httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://xxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://10.189.154.250:7022/")
         };
-        #endif
+#endif
 
         //alert with the user id. Only for testing
         // await DisplayAlert("UserId", _userId.ToString(), "OK");
-            
+
         var response = await httpClient.GetAsync($"api/discoveries/user/{_userId}");
 
         if (response.IsSuccessStatusCode)
@@ -67,22 +67,32 @@ public partial class DiscoveriesPage : ContentPage
             }
             else
             {
-               
+
                 // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
             }
-            
+
             DiscoveriesCollection.ItemsSource = discoveries;
         }
 
     }
-    
+
     private async void OnDetailsClick(object sender, EventArgs e)
-{
-    if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
     {
-        await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
+        {
+            await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
+        }
     }
-}
+
+    private async void OnDescriptionClick(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
+        {
+            await Navigation.PushAsync(new UpdateDescriptionPage(selectedDiscovery));
+        }
+    }
+
+
 
 }
 
