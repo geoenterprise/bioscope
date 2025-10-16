@@ -6,52 +6,71 @@ using System.Text.Json;
 using MobileApp.Models;
 using System.Text.Json.Serialization;
 
-
-
 namespace MobileApp.Pages;
 
 public partial class DiscoveriesPage : ContentPage
 {
+    private readonly MobileApp.Services.AuthService _auth = new(); // ✅ must be inside the class
     private readonly Guid _userId;
+
+    // If you have a class-level HttpClient, declare it here
+    private readonly HttpClient _httpClient;
+
     public DiscoveriesPage(string userId)
     {
         InitializeComponent();
 
         _userId = Guid.Parse(userId);
 
+#if DEBUG
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+        _httpClient = new HttpClient(handler)
+        {
+            BaseAddress = new Uri("https://192.168.1.72:7022/")
+        };
+#else
+        _httpClient = new HttpClient
+        {
+            BaseAddress = new Uri("https://192.168.1.72:7022/")
+        };
+#endif
+
+        // 🧭 Toolbar (simple navigation)
+        ToolbarItems.Clear();
+        ToolbarItems.Add(new ToolbarItem("Home", null, async () => await Navigation.PopToRootAsync()));
+        ToolbarItems.Add(new ToolbarItem("My Discoveries", null, async () => await Navigation.PopAsync()));
+        ToolbarItems.Add(new ToolbarItem
+        {
+            Text = "Logout",
+            Command = new Command(async () => await OnLogoutClicked())
+        });
+        // ToolbarItems.Add(new ToolbarItem("Logout", null, OnLogoutClicked));
 
         LoadDiscoveries();
-
     }
-    
+
+    private async Task OnLogoutClicked()
+    {
+        var confirm = await DisplayAlert("Sign out", "Are you sure you want to log out?", "Sign out", "Cancel");
+        if (!confirm) return;
+
+        // clear prefs and auth header
+        _auth.ClearSession(_httpClient);
+
+        // ✅ so, this is better than PopToRootAsync — ensures a full reset
+        Application.Current!.MainPage = new NavigationPage(new MainPage());
+    }
+
     private async void LoadDiscoveries()
     {
-        #if DEBUG
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-        using var httpClient = new HttpClient(handler)
-        {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
-        };
-        #else
-        using var httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
-        };
-        #endif
-
-        //alert with the user id. Only for testing
-        // await DisplayAlert("UserId", _userId.ToString(), "OK");
-            
-        var response = await httpClient.GetAsync($"api/discoveries/user/{_userId}");
+        var response = await _httpClient.GetAsync($"api/discoveries/user/{_userId}");
 
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
-
-            // await DisplayAlert("Raw JSON", json, "OK");
 
             var options = new JsonSerializerOptions
             {
@@ -60,7 +79,6 @@ public partial class DiscoveriesPage : ContentPage
 
             var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
 
-            // var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
             if (discoveries == null || discoveries.Count == 0)
             {
                 await DisplayAlert("Debug", "No discoveries found after deserialization!", "OK");
@@ -69,27 +87,16 @@ public partial class DiscoveriesPage : ContentPage
             {
                 await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
             }
-            
+
             DiscoveriesCollection.ItemsSource = discoveries;
         }
-
     }
-    
+
     private async void OnDiscoveryClick(object sender, EventArgs e)
     {
         if (sender is Frame frame && frame.BindingContext is Discovery selectedDiscovery)
         {
-            // Navegar a la página de detalles del discovery
             await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
         }
     }
-
 }
-
-
-
-
-
-
-
-

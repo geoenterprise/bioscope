@@ -48,7 +48,7 @@ namespace MobileApp.Pages
 
                 if (!resp.IsSuccessStatusCode)
                 {
-                    // Keep generic in prod
+                    // Keeping generic in prod
                     await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
                     return;
                 }

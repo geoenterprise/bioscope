@@ -23,6 +23,7 @@ public static class MauiProgram
 #else
         builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(ApiConfig.BaseUrl) });
 #endif
+        builder.Services.AddSingleton<AuthService>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<SignupPage>();
