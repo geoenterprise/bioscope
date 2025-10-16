@@ -6,19 +6,45 @@ using System.Text.Json;
 using MobileApp.Models;
 using System.Text.Json.Serialization;
 
-
-
 namespace MobileApp.Pages;
 
 public partial class DiscoveriesPage : ContentPage
 {
     private readonly Guid _userId;
+    private readonly HttpClient _httpClient; // <-- HttpClient a nivel de clase
+
     public DiscoveriesPage(string userId)
     {
         InitializeComponent();
 
         _userId = Guid.Parse(userId);
 
+        // 🧭 Configuración de HttpClient
+        #if DEBUG
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+        _httpClient = new HttpClient(handler)
+        {
+            BaseAddress = new Uri("https://192.168.1.72:4077/") // tu URL de debug
+        };
+        #else
+        _httpClient = new HttpClient
+        {
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/") // tu URL de producción
+        };
+        #endif
+
+      
+        ToolbarItems.Clear();
+        ToolbarItems.Add(new ToolbarItem("Home", null, async () => await Navigation.PopToRootAsync()));
+        ToolbarItems.Add(new ToolbarItem("My Discoveries", null, async () => await Navigation.PopAsync()));
+        ToolbarItems.Add(new ToolbarItem
+        {
+            Text = "Logout",
+            Command = new Command(async () => await OnLogoutClicked())
+        });
     }
 
     protected override async void OnAppearing()
@@ -29,54 +55,36 @@ public partial class DiscoveriesPage : ContentPage
 
     private async Task LoadDiscoveries()
     {
-        #if DEBUG
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-            using var httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
-            };
-        #else
-            using var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://192.168.1.72:4077/")
-            };
-        #endif
-
-        //alert with the user id. Only for testing
-        // await DisplayAlert("UserId", _userId.ToString(), "OK");
-
-        var response = await httpClient.GetAsync($"api/discoveries/user/{_userId}");
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var json = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync($"api/discoveries/user/{_userId}");
 
-            // await DisplayAlert("Raw JSON", json, "OK");
-
-            var options = new JsonSerializerOptions
+            if (response.IsSuccessStatusCode)
             {
-                PropertyNameCaseInsensitive = true
-            };
+                var json = await response.Content.ReadAsStringAsync();
 
-            var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            // var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
-            if (discoveries == null || discoveries.Count == 0)
-            {
-                await DisplayAlert("Debug", "No discoveries found after deserialization!", "OK");
+                var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
+
+                if (discoveries == null || discoveries.Count == 0)
+                    await DisplayAlert("Debug", "No discoveries found after deserialization!", "OK");
+
+                DiscoveriesCollection.ItemsSource = discoveries;
             }
             else
             {
-
-                // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
+                var error = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", $"Could not load discoveries: {error}", "OK");
             }
-
-            DiscoveriesCollection.ItemsSource = discoveries;
         }
-
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Exception: {ex.Message}", "OK");
+        }
     }
 
     private async void OnDetailsClick(object sender, EventArgs e)
@@ -111,29 +119,11 @@ public partial class DiscoveriesPage : ContentPage
 
             try
             {
-                #if DEBUG
-                var handler = new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-                };
-                using var httpClient = new HttpClient(handler)
-                {
-                    BaseAddress = new Uri("https://192.168.1.77:4077/") 
-                };
-                #else
-                using var httpClient = new HttpClient
-                {
-                    BaseAddress = new Uri("https://192.168.1.77:4077/")
-                };
-                #endif
-
-                var response = await httpClient.DeleteAsync($"api/discoveries/delete/{selectedDiscovery.DiscoveryId}");
+                var response = await _httpClient.DeleteAsync($"api/discoveries/delete/{selectedDiscovery.DiscoveryId}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     await DisplayAlert("Deleted", "Discovery was deleted successfully.", "OK");
-
-                    
                     await LoadDiscoveries(); 
                 }
                 else
@@ -149,10 +139,13 @@ public partial class DiscoveriesPage : ContentPage
         }
     }
 
-
-
-
+    private async Task OnLogoutClicked()
+    {
+        // Lógica de logout aquí
+        await Navigation.PopToRootAsync();
+    }
 }
+
 
 
 
