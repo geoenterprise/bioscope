@@ -36,7 +36,7 @@ public partial class DiscoveriesPage : ContentPage
             };
             using var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("https://192.168.1.72:4077/")
+                BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
             };
         #else
             using var httpClient = new HttpClient
@@ -118,12 +118,12 @@ public partial class DiscoveriesPage : ContentPage
                 };
                 using var httpClient = new HttpClient(handler)
                 {
-                    BaseAddress = new Uri("https://192.168.1.72:4077/") 
+                    BaseAddress = new Uri("https://bioscopeapi.onrender.com/") 
                 };
                 #else
                 using var httpClient = new HttpClient
                 {
-                    BaseAddress = new Uri("https://192.168.1.72:4077/")
+                    BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
                 };
                 #endif
 
