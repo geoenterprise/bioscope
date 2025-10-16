@@ -59,12 +59,12 @@ public partial class SuggestionDetailsPage : ContentPage
             };
             using var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("https://10.189.154.250:7022/")
+                BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
             };
             #else
             using var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://10.189.154.250:7022/")
+                BaseAddress = new Uri("https://bioscopeapi.onrender.com/")
             };
             #endif
 
