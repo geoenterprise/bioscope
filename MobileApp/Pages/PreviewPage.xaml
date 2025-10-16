@@ -8,28 +8,33 @@
         <VerticalStackLayout
             Padding="30,70"
             Spacing="25">
-            <Image
-                x:Name="PreviewImage"
+            
+            <Frame Padding="0"
+                CornerRadius="15"
+                HasShadow="True"
                 HeightRequest="300"
-                Aspect="AspectFit" />
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <Image x:Name="PreviewImage"
+                    Aspect="AspectFit" />
+            </Frame>
 
             <Button
-                Text="Confirm" 
+                Text="Look for Suggestions" 
                 SemanticProperties.Hint="Confirm to send the image to the AI"
                 Clicked="IdentifyClicked"
                 HorizontalOptions="Fill" />
             
             <Button
-                Text="Retake" 
-                SemanticProperties.Hint="Take the photo again"
-               
+                Text="Review Discoveries" 
+                SemanticProperties.Hint="It will display all your discoveries"
+                Clicked="DiscoveriesClicked"
                 HorizontalOptions="Fill" />
-        
   
             <!-- <Button 
                 Text="Get Weather" 
                 Clicked="OnGetWeatherClicked"/> -->
-            
             
         </VerticalStackLayout>
     </ScrollView>

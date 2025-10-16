@@ -29,12 +29,12 @@ public partial class DiscoveriesPage : ContentPage
         };
         _httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
+            BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
         };
 #else
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://192.168.1.72:7022/")
+            BaseAddress = new Uri("https://xxxxxxxxx:7022/")
         };
 #endif
 
@@ -85,7 +85,8 @@ public partial class DiscoveriesPage : ContentPage
             }
             else
             {
-                await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
+               
+                // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
             }
 
             DiscoveriesCollection.ItemsSource = discoveries;

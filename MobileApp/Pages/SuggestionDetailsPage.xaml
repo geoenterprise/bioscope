@@ -55,7 +55,7 @@
                         </Label.FormattedText>
                     </Label>
                     
-                    <Label Text="✅ Add a note:" FontAttributes="Bold" />
+                    <Label Text="✅ Add a Comment:" FontAttributes="Bold" />
                         <Editor x:Name="CommentEditor"
                                 Placeholder="Write your notes here"
                                 AutoSize="TextChanges"
