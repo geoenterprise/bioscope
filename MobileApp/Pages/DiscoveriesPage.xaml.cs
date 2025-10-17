@@ -12,9 +12,7 @@ public partial class DiscoveriesPage : ContentPage
 {
     private readonly MobileApp.Services.AuthService _auth = new(); // ✅ must be inside the class
     private readonly Guid _userId;
-
-    // If you have a class-level HttpClient, declare it here
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient; // <-- HttpClient a nivel de clase
 
     public DiscoveriesPage(string userId)
     {
@@ -22,23 +20,24 @@ public partial class DiscoveriesPage : ContentPage
 
         _userId = Guid.Parse(userId);
 
-#if DEBUG
+        // 🧭 Configuración de HttpClient
+        #if DEBUG
         var handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         };
         _httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://xxxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/") // tu URL de debug
         };
-#else
+        #else
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://xxxxxxxxx:7022/")
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/") // tu URL de producción
         };
 #endif
 
-        // 🧭 Toolbar (simple navigation)
+      
         ToolbarItems.Clear();
         ToolbarItems.Add(new ToolbarItem("Home", null, async () => await Navigation.PopToRootAsync()));
         ToolbarItems.Add(new ToolbarItem("My Discoveries", null, async () => await Navigation.PopAsync()));
@@ -47,57 +46,112 @@ public partial class DiscoveriesPage : ContentPage
             Text = "Logout",
             Command = new Command(async () => await OnLogoutClicked())
         });
-        // ToolbarItems.Add(new ToolbarItem("Logout", null, OnLogoutClicked));
-
-        LoadDiscoveries();
     }
 
-    private async Task OnLogoutClicked()
+    protected override async void OnAppearing()
     {
-        var confirm = await DisplayAlert("Sign out", "Are you sure you want to log out?", "Sign out", "Cancel");
-        if (!confirm) return;
-
-        // clear prefs and auth header
-        _auth.ClearSession(_httpClient);
-
-        // ✅ so, this is better than PopToRootAsync — ensures a full reset
-        Application.Current!.MainPage = new NavigationPage(new MainPage());
+        base.OnAppearing();
+        await LoadDiscoveries();
     }
 
-    private async void LoadDiscoveries()
+    private async Task LoadDiscoveries()
     {
-        var response = await _httpClient.GetAsync($"api/discoveries/user/{_userId}");
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var json = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync($"api/discoveries/user/{_userId}");
 
-            var options = new JsonSerializerOptions
+            if (response.IsSuccessStatusCode)
             {
-                PropertyNameCaseInsensitive = true
-            };
+                var json = await response.Content.ReadAsStringAsync();
 
-            var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            if (discoveries == null || discoveries.Count == 0)
-            {
-                await DisplayAlert("Debug", "No discoveries found after deserialization!", "OK");
+                var discoveries = JsonSerializer.Deserialize<List<Discovery>>(json, options);
+
+                if (discoveries == null || discoveries.Count == 0)
+                    await DisplayAlert("Debug", "No discoveries found after deserialization!", "OK");
+
+                DiscoveriesCollection.ItemsSource = discoveries;
             }
             else
             {
-               
-                // await DisplayAlert("Debug", $"Loaded {discoveries.Count} discoveries", "OK");
+                var error = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", $"Could not load discoveries: {error}", "OK");
             }
-
-            DiscoveriesCollection.ItemsSource = discoveries;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Exception: {ex.Message}", "OK");
         }
     }
 
     private async void OnDetailsClick(object sender, EventArgs e)
     {
-        if (sender is Frame frame && frame.BindingContext is Discovery selectedDiscovery)
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
         {
             await Navigation.PushAsync(new DiscoveryDetailsPage(selectedDiscovery));
         }
     }
+
+    private async void OnDescriptionClick(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
+        {
+            await Navigation.PushAsync(new UpdateDescriptionPage(selectedDiscovery));
+        }
+    }
+
+    private async void OnDeleteClick(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is Discovery selectedDiscovery)
+        {
+            bool confirm = await DisplayAlert(
+                "Confirm Delete", 
+                $"Are you sure you want to delete '{selectedDiscovery.CommonName}'?", 
+                "Yes", 
+                "No"
+            );
+
+            if (!confirm)
+                return;
+
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/discoveries/delete/{selectedDiscovery.DiscoveryId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Deleted", "Discovery was deleted successfully.", "OK");
+                    await LoadDiscoveries(); 
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Error", $"Could not delete: {error}", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Exception: {ex.Message}", "OK");
+            }
+        }
+    }
+
+    private async Task OnLogoutClicked()
+    {
+        // Lógica de logout aquí
+        await Navigation.PopToRootAsync();
+    }
 }
+
+
+
+
+
+
+
+
+

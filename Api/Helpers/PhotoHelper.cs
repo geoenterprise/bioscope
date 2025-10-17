@@ -32,8 +32,9 @@ namespace Api.Helpers
         {
             try
             {
-            
+#if DEBUG
                 DotEnv.Load();
+#endif
                 string apiKey = Environment.GetEnvironmentVariable("PLANT_ID_API_KEY");
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Api-Key", apiKey);

@@ -115,7 +115,7 @@ public class DiscoveriesController : ControllerBase
     }
 
 
-   
+
     // [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> Create(CreateDiscoveryRequest req)
@@ -141,8 +141,8 @@ public class DiscoveriesController : ControllerBase
             ScientificName = req.ScientificName
         };
 
-        _db.Discoveries.Add(discovery);        
-        
+        _db.Discoveries.Add(discovery);
+
 
         //saving the user comments in comments table
         if (!string.IsNullOrWhiteSpace(req.Comment))
@@ -180,6 +180,39 @@ public class DiscoveriesController : ControllerBase
         return Ok(new { message = "Discovery saved", discovery = discoveryDto });
         // return CreatedAtAction(nameof(Get), new { id = discovery.DiscoveryId }, new { discovery.DiscoveryId });
     }
+
+
+    [HttpPatch("updateDescription/{id}")]
+    public async Task<IActionResult> UpdateDescription(Guid id, [FromBody] UpdateDescriptionDto dtoUpdate)
+    {
+
+        var discovery = await _db.Discoveries.FindAsync(id);
+        if (discovery == null)
+            return NotFound("Discovery no found.");
+
+
+        discovery.WikiDescription = dtoUpdate.WikiDescription;
+
+
+        await _db.SaveChangesAsync();
+
+        return Ok(discovery);
+    }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteDiscovery(Guid id)
+    {
+        var discovery = await _db.Discoveries.FindAsync(id);
+        if (discovery == null) 
+            return NotFound();
+
+        _db.Discoveries.Remove(discovery);
+        await _db.SaveChangesAsync();
+
+        return NoContent(); 
+    }
+
+
 
     // Toggle visibility (owner)
     // [Authorize]
