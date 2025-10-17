@@ -22,8 +22,6 @@ Jovanny Rey's Quote: "And if men come unto me I will show unto them their weakne
 
 ---
 
-> ⚙️ *Bioscope is still in development, but it already offers exciting features to help you learn and connect with nature.*
-``
 ## ⚙️ Running the Application with USB Debugger
 
 The application can be deployed to an Android device using **USB Debugger**.  
