@@ -24,3 +24,27 @@ Jovanny Rey's Quote: "And if men come unto me I will show unto them their weakne
 
 > ⚙️ *Bioscope is still in development, but it already offers exciting features to help you learn and connect with nature.*
 ``
+## ⚙️ Running the Application with USB Debugger
+
+The application can be deployed to an Android device using **USB Debugger**.  
+
+### 1️⃣ Install MAUI and Android workloads (if first time)
+>>dotnet workload install maui
+>>dotnet workload install android
+
+2️⃣ Restore project packages for additional packages
+>>dotnet restore
+
+3️⃣ Configure your Android device
+Enable Developer Mode on your device.
+
+Connect it via USB.
+
+Check if your device is detected:
+>>adb devices
+
+4️⃣ Run the application
+>>dotnet maui run -f net8.0-android
+
+Note:
+The API that the MAUI project consumes (Bioscope) is already hosted remotely on Render.
