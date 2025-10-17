@@ -27,7 +27,7 @@ public partial class DiscoveriesPage : ContentPage
         };
         _httpClient = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://192.168.1.72:4077/") // tu URL de debug
+            BaseAddress = new Uri("https://bioscopeapi.onrender.com/") // tu URL de debug
         };
         #else
         _httpClient = new HttpClient
