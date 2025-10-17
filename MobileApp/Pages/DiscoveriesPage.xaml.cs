@@ -10,6 +10,7 @@ namespace MobileApp.Pages;
 
 public partial class DiscoveriesPage : ContentPage
 {
+    private readonly MobileApp.Services.AuthService _auth = new(); // ✅ must be inside the class
     private readonly Guid _userId;
     private readonly HttpClient _httpClient; // <-- HttpClient a nivel de clase
 
@@ -34,7 +35,7 @@ public partial class DiscoveriesPage : ContentPage
         {
             BaseAddress = new Uri("https://bioscopeapi.onrender.com/") // tu URL de producción
         };
-        #endif
+#endif
 
       
         ToolbarItems.Clear();

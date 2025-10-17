@@ -23,8 +23,8 @@ public partial class DiscoveryDetailsPage : ContentPage
 
         BindingContext = _discovery;
 
-        LoadCommentsAsync(_discovery.DiscoveryId);
-
+        // Await the loading of comments after the page appears
+        this.Loaded += async (s, e) => await LoadCommentsAsync(_discovery.DiscoveryId);
     }
 
 
